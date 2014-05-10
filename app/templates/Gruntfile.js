@@ -413,7 +413,7 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        }
+        },
 
         // Run some tasks in parallel to speed up build process
         concurrent: {

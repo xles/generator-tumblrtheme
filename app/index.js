@@ -115,18 +115,18 @@ AppGenerator.prototype.askFor = function askFor() {
 
         this.includeSass = hasFeature('includeSass');
         
+        this.includeFoundation = false;
+        this.includeBootstrap  = false;
+
         switch (answers.framework) {
             case 'bootstrap':
                 this.includeBootstrap  = true;
-                this.includeFoundation = false;
                 break;
             case 'foundation':
+                this.includeSass = true;
                 this.includeFoundation = true;
-                this.includeBootstrap  = false;
                 break;
             default:
-                this.includeFoundation = false;
-                this.includeBootstrap  = false;
                 break;
         }
         //this.includeFoundation = hasFeature('includeBootstrap');
