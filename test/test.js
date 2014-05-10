@@ -10,7 +10,7 @@ describe('Webapp generator test', function () {
         return done(err);
       }
 
-      this.webapp = helpers.createGenerator('webapp:app', [
+      this.webapp = helpers.createGenerator('tumblrtheme:app', [
         '../../app', [
           helpers.createDummyGenerator(),
           'mocha:app'

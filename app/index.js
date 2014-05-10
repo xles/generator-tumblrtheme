@@ -55,8 +55,8 @@ AppGenerator.prototype.askFor = function askFor() {
             message: 'What more would you like?',
             choices: [
                 {
-                    name: 'Bootstrap',
-                    value: 'includeBootstrap',
+                    name: 'A CSS framework (Bootstrap 3 or Foundation 5)',
+                    value: 'includeFramework',
                     checked: true
                 },
                 {
@@ -70,6 +70,28 @@ AppGenerator.prototype.askFor = function askFor() {
                     checked: false
                 }
             ]
+        },
+        {
+            when: function (answers) {
+                return answers.features.indexOf('includeFramework') !== -1;
+            },
+            type: 'list',
+            name: 'framework',
+            choices: [
+                {
+                    name: 'Twitter Bootstrap 3',
+                    value: 'bootstrap'
+                },
+                {
+                    name: 'Zurb Foundation 5',
+                    value: 'foundation'
+                },
+                {
+                    name: 'No CSS framework',
+                    value: 'none'
+                }
+            ],
+            message: 'Which CSS framework would you like?'
         },
         {
             when: function (answers) {
@@ -92,7 +114,18 @@ AppGenerator.prototype.askFor = function askFor() {
         }
 
         this.includeSass = hasFeature('includeSass');
-        this.includeBootstrap = hasFeature('includeBootstrap');
+        
+        switch (answers.framework) {
+            case 'bootstrap':
+                this.includeBootstrap = true;
+                break;
+            case 'foundation':
+                this.includeFoundation = true;
+                break;
+            default:
+                break;
+        }
+        //this.includeFoundation = hasFeature('includeBootstrap');
         this.includeModernizr = hasFeature('includeModernizr');
 
         this.includeLibSass = answers.libsass;
