@@ -1,5 +1,5 @@
-# CAUTION: WIP, DO NOT USE.  Project is not in the NPM registry for a 
-reason!
+# CAUTION: WIP, DO NOT USE.  
+## Project is not in the NPM registry for a reason!
 
 # Tumblr theme generator [![Build Status](https://secure.travis-ci.org/xles/generator-tumblrtheme.svg?branch=master)](http://travis-ci.org/xles/generator-tumblrtheme)
 
