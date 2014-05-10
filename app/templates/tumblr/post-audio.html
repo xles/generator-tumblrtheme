@@ -1,0 +1,27 @@
+{block:Audio}
+  
+  {block:AudioEmbed}
+    {AudioEmbed}
+  {/block:AudioEmbed}
+  
+  {block:AudioPlayer}
+    {block:IfShowAlbumArtOnAudioPosts}
+      {block:AlbumArt}
+        <div class="album_art">
+          <img src="{AlbumArtURL}" alt="{block:Artist}{Artist}{/block:Artist}{block:TrackName} - {TrackName}{/block:TrackName}" style="margin-bottom:10px;" />
+        </div>
+      {/block:AlbumArt}
+    {/block:IfShowAlbumArtOnAudioPosts}
+  
+    <div class="audio">
+      <div class="player">{AudioPlayerWhite}</div>
+      <div class="meta">{block:PlayCount}{PlayCountWithLabel}{/block:PlayCount}{block:ExternalAudio}<span class="download_external_audio"> &bull; <a href="{ExternalAudioURL}">{lang:Download}</a></span>{/block:ExternalAudio}</div>
+      <div class="clear"></div>
+    </div>
+  {/block:AudioPlayer}
+  
+  <div class="clear"></div>
+  
+  {block:Caption}<div class="copy">{Caption}</div>{/block:Caption}
+  
+{/block:Audio}

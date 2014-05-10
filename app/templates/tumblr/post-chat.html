@@ -1,0 +1,12 @@
+{block:Chat}
+  {block:Title}<div class="title">{Title}</div>{/block:Title}
+  <div class="chat">
+    <div class="lines">
+      {block:Lines}
+        <div class="line {Alt}">{block:Label}<strong>{Label}</strong>{/block:Label} {Line}</div>
+      {/block:Lines}
+    </div>
+  </div>
+  <div class="clear"></div>
+  <div style="height:10px;"></div>
+{/block:Chat}

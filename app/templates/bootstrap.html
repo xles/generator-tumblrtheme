@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+	<head>
+		<title>{Title}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="alternate" type="application/rss+xml" href="{RSS}">
+		<link rel="shortcut icon" href="{Favicon}">
+		{block:Description}
+			<meta name="description" content="{MetaDescription}">
+		{/block:Description}
+
+		<meta name="if:Enable Jump Pagination" content="1">
+				
+		<meta name="if:Carousel photoset" content="0">
+				
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+
+
+		<style type="text/css">{CustomCSS}</style>
+		<!--[if lt IE 9]>
+			<script src="http://getbootstrap.com/assets/js/html5shiv.js"></script>
+			<script src="http://getbootstrap.com/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="/">{Title}</a>
+				<ul class="nav navbar-nav hidden-sm">
+					{block:AskEnabled}
+						<li class="visible-md"><a href="/ask">{AskLabel}</a></li>
+					{/block:AskEnabled}
+					{block:HasPages}
+						{block:Pages}
+						<li><a href="{URL}">{Label}</a></li>
+						{/block:Pages}
+					{/block:HasPages}
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="container" id="posts">
+			<div class="row">
+				<div class="col-md-8">
+					{block:Posts}
+					<div class="panel panel-default">
+
+						<!-- posts -->
+						
+							{block:HasTags}
+							<div class="tumblr-tags">
+								<span class="glyphicon glyphicon-tags"></span>
+								{block:Tags}
+									<a href="{TagURL}" class="label label-default">{Tag}</a>
+								{/block:Tags}
+							</div>
+							{/block:HasTags}
+						</div>
+						<div class="panel-footer">
+							<a href="{Permalink}">
+								<div class="notes pull-right">
+									{block:NoteCount}
+										<span class="badge" title="{NoteCountWithLabel}">{NoteCount}</span>
+									{/block:NoteCount}
+								</div>
+								<div class="footer for_permalink">
+									<div class="date">
+										{block:Reblog}
+											Reblogged {TimeAgo} from {ReblogParentName}
+											{block:RebloggedFromReblog}
+												(<span style="text-transform:lowercase;">Originally from {ReblogRootName}</span>)
+											{/block:RebloggedFromReblog}
+										{/block:Reblog}
+
+											{block:Date}
+												Posted {TimeAgo} {block:source}from {source}{/block:source}
+											{/block:Date}
+										{block:NotReblog}
+										{/block:NotReblog}
+									</div>
+								</div>
+							</a>
+									
+							{block:ContentSource}
+							<a href="{SourceURL}" class="source_url">
+								{lang:Source}:
+								{SourceTitle}
+							</a>
+							{/block:ContentSource}
+						</div>
+					</div>
+					
+					{block:PostNotes}
+					<div class="panel panel-default">
+						<div class="panel-heading">Notes</div>
+									<div class="panel-body">
+									{PostNotes}
+														</div>
+					</div>
+					{/block:PostNotes}
+					
+				{/block:Posts}
+
+				{block:IfNotEnableJumpPagination}
+					{block:Pagination}
+					<ul class="pager">
+						{block:PreviousPage}
+							<li class="previous"><a href="{PreviousPage}">&larr; Newer</a></li>
+						{/block:PreviousPage}
+
+						{block:NextPage}
+							<li class="next"><a href="{NextPage}">Older &rarr;</a></li>
+						{/block:NextPage}
+
+						</ul>
+					{/block:Pagination}
+				{/block:IfNotEnableJumpPagination}
+
+				{block:IfEnableJumpPagination}
+				<div class="row center">
+					{block:Pagination}
+					<ul class="pagination">
+						{block:PreviousPage}
+							<li><a href="{PreviousPage}">&laquo;</a></li>
+						{/block:PreviousPage}
+
+						{block:JumpPagination length="5"}
+							{block:CurrentPage}
+								<li class="active"><a href="#">{PageNumber}</a></li>
+							{/block:CurrentPage}
+
+							{block:JumpPage}
+								<li><a href="{URL}">{PageNumber}</a></li>
+							{/block:JumpPage}
+						{/block:JumpPagination}
+
+						{block:NextPage}
+							<li><a href="{NextPage}">&raquo;</a></li>
+						{/block:NextPage}
+					</ul>
+					{/block:Pagination}
+				</div>
+				{/block:IfEnableJumpPagination}
+
+			</div>
+			<div class="col-md-4">
+				<div class="well well-lg">
+					<div class="media">
+						<img src="{PortraitURL-128}" class="media-object pull-left img-thumbnail">
+						<div class="media-body">
+							{block:Description}
+								<p class="lead">{Description}</p>
+							{/block:Description}
+						</div>
+					</div>
+					<ul class="nav nav-pills nav-stacked">
+						{block:AskEnabled}
+							<li><a href="/ask">{AskLabel}</a></li>
+						{/block:AskEnabled}
+						{block:SubmissionsEnabled}
+							<li><a href="/submit">{SubmitLabel}</a></li>
+						{/block:SubmissionsEnabled}
+
+						{block:HasPages}
+							{block:Pages}
+							<li class="visible-sm"><a href="{URL}">{Label}</a></li>
+							{/block:Pages}
+						{/block:HasPages}
+					</ul>
+
+					<form action="/search" method="get" class="form-horizontal sidebar-item">
+							<div class="input-group">
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-search"></span>    
+									</span>
+								<input type="text" name="q" value="{SearchQuery}" class="form-control" placeholder="Search">
+							</div>
+					</form>
+
+					<a href="http://www.tumblr.com/follow/{PlaintextName}" class="btn btn-primary btn-lg btn-block sidebar-item">
+						{lang:Follow on Tumblr}
+					</a>
+
+					<div class="row">
+						<div class="col-md-6" id="button-archive">
+							<a href="/archive" class="btn btn-default btn-block sidebar-item">
+								<span class=" glyphicon glyphicon-list"></span>
+								{lang:Archive}
+							</a>
+						</div>
+						<div class="col-md-6" id="button-random">
+							<a href="/random" class="btn btn-default btn-block sidebar-item">
+								<span class="glyphicon glyphicon-random"></span>
+								{lang:Random}
+							</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6" id="button-rss">
+							<a href="{RSS}" class="btn btn-default btn-block sidebar-item">
+								<img src="https://dl.dropboxusercontent.com/u/58338447/tumblr/glyphicons_social_37_rss.png" class="btn-img">
+								{lang:RSS feed}
+							</a>
+						</div>
+						<div class="col-md-6" id="button-mobile">
+							<a href="/mobile" class="btn btn-default btn-block sidebar-item">
+								<span class="glyphicon glyphicon-phone"></span>
+								{lang:Mobile}
+							</a>
+						</div>
+					</div>
+				</div>
+
+				</div>
+				
+			</div>
+		</div>
+
+		<footer>
+			Built with <a href="http://getbootstrap.com/">Twitter Bootstrap</a> 
+			using <a href="http://tumblrthemr.icelab.com.au/">TumblrThemr</a>. 
+			Icons from <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+			&copy; 2013 <a href="http://www.tumblr.com">{lang:Powered by Tumblr}</a>
+		</footer>
+
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+		<script>
+			$(document).ready(function(){
+				$('.carousel-inner .item:first').addClass('active');
+				$('.carousel').carousel();
+			});
+		</script>
+	</body>
+</html>

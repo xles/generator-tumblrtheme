@@ -392,6 +392,29 @@ module.exports = function (grunt) {
             }
         },<% } %>
 
+        // Inject concatenated posts into main layout
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: '<!-- posts -->',
+                            replacement: grunt.file.read('.tmp/posts.html')
+                        }
+                    ],
+                    usePrefix: false
+                },
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['<%%= config.app %>/index.html'],
+                        dest: '<%%= config.dist %>/'
+                    }
+                ]
+            }
+        }
+
         // Run some tasks in parallel to speed up build process
         concurrent: {
             server: [<% if (includeSass) { %>
