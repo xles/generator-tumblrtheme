@@ -1,8 +1,11 @@
-# Web app generator [![Build Status](https://secure.travis-ci.org/yeoman/generator-webapp.svg?branch=master)](http://travis-ci.org/yeoman/generator-webapp)
+# CAUTION: WIP, DO NOT USE.  Project is not in the NPM registry for a 
+reason!
 
-[Yeoman](http://yeoman.io) generator that scaffolds out a front-end web app.
+# Tumblr theme generator [![Build Status](https://secure.travis-ci.org/xles/generator-tumblrtheme.svg?branch=master)](http://travis-ci.org/xles/generator-tumblrtheme)
 
-![](http://i.imgur.com/uKTT2Hj.png)
+[Yeoman](http://yeoman.io) generator that scaffolds out a tumblr theme.
+
+<!-- ![](http://i.imgur.com/uKTT2Hj.png) <![CDATA[
 
 ## Features
 
@@ -73,7 +76,8 @@ See the [contributing docs](https://github.com/yeoman/yeoman/blob/master/contrib
 Note: We are regularly asked whether we can add or take away features. If a change is good enough to have a positive impact on all users, we are happy to consider it.
 
 If not, `generator-webapp` is fork-friendly and you can always maintain a custom version which you `npm install && npm link` to continue using via `yo webapp` or a name of your choosing.
-
+]]>
+-->
 
 ## License
 

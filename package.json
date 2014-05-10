@@ -1,6 +1,6 @@
 {
   "name": "generator-tumblrtheme",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Scaffold out a tumblr theme",
   "license": "BSD",
   "repository": "xles/generator-tumblrtheme",
@@ -24,7 +24,11 @@
     "h5bp",
     "modernizr",
     "jquery",
-    "grunt"
+    "grunt",
+    "tumblr",
+    "theme",
+    "tumblr-theme",
+    "tumblrtheme"
   ],
   "dependencies": {
     "yeoman-generator": "~0.16.0",
