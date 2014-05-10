@@ -117,12 +117,16 @@ AppGenerator.prototype.askFor = function askFor() {
         
         switch (answers.framework) {
             case 'bootstrap':
-                this.includeBootstrap = true;
+                this.includeBootstrap  = true;
+                this.includeFoundation = false;
                 break;
             case 'foundation':
                 this.includeFoundation = true;
+                this.includeBootstrap  = false;
                 break;
             default:
+                this.includeFoundation = false;
+                this.includeBootstrap  = false;
                 break;
         }
         //this.includeFoundation = hasFeature('includeBootstrap');
