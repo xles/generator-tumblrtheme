@@ -338,9 +338,12 @@ module.exports = function (grunt) {
         //         }
         //     }
         // },
-        // concat: {
-        //     dist: {}
-        // },
+        concat: {
+            dist: {
+                src: '<%%= config.app %>/post-types/*.html',
+                dest: '.tmp/posts.html'
+            }
+        },
 
         // Copies remaining files to places other tasks can use
         copy: {
@@ -355,6 +358,7 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.webp',
                         '{,*/}*.html',
+                        '!post-types/**',
                         'styles/fonts/{,*/}*.*'
                     ]
                 }<% if (includeBootstrap) { %>, {
@@ -393,27 +397,56 @@ module.exports = function (grunt) {
         },<% } %>
 
         // Inject concatenated posts into main layout
-        replace: {
-            dist: {
+        'string-replace': {
+            posts: {
                 options: {
-                    patterns: [
+                    replacements: [
                         {
-                            match: '<!-- posts -->',
-                            replacement: grunt.file.read('.tmp/posts.html')
+                            pattern: /<!-- include (.*?) -->/ig,
+                            replacement: function (match, p1) {//, offset, string) {
+                                if (p1.charAt(0) !== '/') {
+                                    p1 = '/' + p1;
+                                }
+                                return grunt.file.read(config.app + p1);
+                            }
+                        },
+                        {
+                            pattern: /<!-- include\((.*?)\) (.*?) -->/ig,
+                            replacement: function (match, p1, p2) {//, offset, string) {
+                                if (p1.substr(-1) !== '/') {
+                                    p1 = p1 + '/';
+                                }
+                                if (p2.charAt(0) === '/') {
+                                    p2 = p2.substr(1, -1);
+                                }
+                                return grunt.file.read(p1 + p2);
+                            }
                         }
                     ],
-                    usePrefix: false
                 },
-                files: [
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['<%%= config.app %>/index.html'],
-                        dest: '<%%= config.dist %>/'
-                    }
-                ]
+                files: {
+                    '<%%= config.dist %>/index.html': '<%%= config.app %>/index.html'
+                }
+            },
+            dist: {
+                options: {
+                    replacements: [
+                        {
+                            pattern: /<link rel="stylesheet" href="(.*?)\.css">/ig,
+                            replacement: function(match, p1) {
+                                var tmp = '<style>';
+                                tmp += grunt.file.read(config.dist + '/' + p1 + '.css');
+                                return tmp + '</style>';
+                            }
+                        }
+                    ]
+                },
+                files: {
+                    '<%%= config.dist %>/smoosh.html': '<%%= config.dist %>/index.html'
+                }
             }
         },
+
 
         // Run some tasks in parallel to speed up build process
         concurrent: {
@@ -480,7 +513,8 @@ module.exports = function (grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy:dist',<% if (includeModernizr) { %>
+        'copy:dist',
+        'string-replace:posts',<% if (includeModernizr) { %>
         'modernizr',<% } %>
         'rev',
         'usemin',

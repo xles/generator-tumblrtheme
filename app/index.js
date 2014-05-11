@@ -60,11 +60,6 @@ AppGenerator.prototype.askFor = function askFor() {
                     checked: true
                 },
                 {
-                    name: 'Sass',
-                    value: 'includeSass',
-                    checked: false
-                },
-                {
                     name: 'Modernizr',
                     value: 'includeModernizr',
                     checked: false
@@ -95,7 +90,24 @@ AppGenerator.prototype.askFor = function askFor() {
         },
         {
             when: function (answers) {
-                return answers.features.indexOf('includeSass') !== -1;
+                if (answers.features.indexOf('includeFramework') !== -1) {
+                    if (answers.framework === 'bootstrap') {
+                        return true;
+                    } else
+                        return false;
+                } else {
+                    return false;
+                }
+            },
+            type: 'confirm',
+            name: 'useLess',
+            value: 'includeSass',
+            message: 'Would you like to use the Less version of Bootstrap?',
+            default: false
+        },
+        {
+            when: function (answers) {
+                return !answers.useLess;
             },
             type: 'confirm',
             name: 'libsass',
@@ -117,17 +129,21 @@ AppGenerator.prototype.askFor = function askFor() {
         
         this.includeFoundation = false;
         this.includeBootstrap  = false;
+        this.includeSass = true;
+        this.framework = 'bootstrap';
 
         switch (answers.framework) {
             case 'bootstrap':
                 this.includeBootstrap  = true;
                 break;
             case 'foundation':
-                this.includeSass = true;
                 this.includeFoundation = true;
                 break;
             default:
                 break;
+        }
+        if (this.includeBootstrap && answers.useLess) {
+            this.includeSass = false;
         }
         //this.includeFoundation = hasFeature('includeBootstrap');
         this.includeModernizr = hasFeature('includeModernizr');
@@ -213,8 +229,22 @@ AppGenerator.prototype.writeIndex = function writeIndex() {
     });
 };
 
+AppGenerator.prototype.posts = function posts() {
+    this.copy(this.framework + '/post-answer.html',   'app/post-types/post-answer.html');
+    this.copy(this.framework + '/post-audio.html',    'app/post-types/post-audio.html');
+    this.copy(this.framework + '/post-chat.html',     'app/post-types/post-chat.html');
+    this.copy(this.framework + '/post-link.html',     'app/post-types/post-link.html');
+    this.copy(this.framework + '/post-panorama.html', 'app/post-types/post-panorama.html');
+    this.copy(this.framework + '/post-photo.html',    'app/post-types/post-photo.html');
+    this.copy(this.framework + '/post-photoset.html', 'app/post-types/post-photoset.html');
+    this.copy(this.framework + '/post-quote.html',    'app/post-types/post-quote.html');
+    this.copy(this.framework + '/post-text.html',     'app/post-types/post-text.html');
+    this.copy(this.framework + '/post-video.html',    'app/post-types/post-video.html');
+};
+
 AppGenerator.prototype.app = function app() {
     this.mkdir('app');
+    this.mkdir('app/post-types');
     this.mkdir('app/scripts');
     this.mkdir('app/styles');
     this.mkdir('app/images');
